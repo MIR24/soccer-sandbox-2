@@ -6,7 +6,12 @@
 
 /Assets/AssetStoreTools*
 /Assets/Plugins*
+/Assets/StreamingAssets*
+/Assets/RockVR*
+/Assets/Cinemachine*
 /Assets/Sport\ Balls\ Pack*
+Assets/Gizmos*
+VideoCaptureLib_Log.txt
 
 # Visual Studio 2015 cache directory
 /.vs/
@@ -36,3 +41,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+Assets/Gizmos.meta
