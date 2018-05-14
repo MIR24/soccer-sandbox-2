@@ -12,6 +12,7 @@ namespace UnityStandardAssets.SceneUtils
         // Update is called once per frame
         private void Update()
         {
+                setTargetOn.SendMessage("SetTarget", transform);
             if (!Input.GetMouseButtonDown(0))
             {
                 return;
@@ -25,7 +26,7 @@ namespace UnityStandardAssets.SceneUtils
             transform.position = hit.point + hit.normal*surfaceOffset;
             if (setTargetOn != null)
             {
-                setTargetOn.SendMessage("SetTarget", transform);
+                //setTargetOn.SendMessage("SetTarget", transform);
             }
         }
     }

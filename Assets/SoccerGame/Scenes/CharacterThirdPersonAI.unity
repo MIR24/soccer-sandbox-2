@@ -756,9 +756,9 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 250180633}
   serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 1
-  m_AngularDrag: 1
+  m_Mass: 3
+  m_Drag: 0.05
+  m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1496,7 +1496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &847248443
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1665,7 +1665,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &850329737 stripped
 GameObject:
@@ -1908,8 +1908,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.07489464, y: 0.22819889, z: 0.10330288}
-  m_Center: {x: -0.03262786, y: 0.06991217, z: -0.00000012107195}
+  m_Size: {x: 0.10770871, y: 0.19953181, z: 0.10330288}
+  m_Center: {x: -0.012568103, y: 0.069912165, z: -0.00000009685756}
 --- !u!54 &990227213
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2034,8 +2034,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.074894585, y: 0.22819874, z: 0.10330283}
-  m_Center: {x: -0.032624356, y: 0.06991225, z: -0.00000023696163}
+  m_Size: {x: 0.107708655, y: 0.19953166, z: 0.10330283}
+  m_Center: {x: -0.012555394, y: 0.06991225, z: -0.00000020931844}
 --- !u!54 &1098759475
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2463,6 +2463,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4225372473848552, guid: de9eaba3f941fe944a2df4e7abb3db4a,
     type: 2}
   m_PrefabInternal: {fileID: 2094546271}
+--- !u!54 &1206655636 stripped
+Rigidbody:
+  m_PrefabParentObject: {fileID: 54686365486355876, guid: de9eaba3f941fe944a2df4e7abb3db4a,
+    type: 2}
+  m_PrefabInternal: {fileID: 2094546271}
 --- !u!114 &1206655637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2548,6 +2553,21 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     spineTargetOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &1206655639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1206655631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d25a140bfa1c49bfafcaa11cff00f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedRigidbody: {fileID: 1206655636}
+  selectedCollider: {fileID: 990227212}
+  symmetry: 1
+  mode: 0
 --- !u!1 &1234856644 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1067047423249416, guid: de9eaba3f941fe944a2df4e7abb3db4a,
@@ -2882,6 +2902,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1335141577}
   - component: {fileID: 1335141580}
+  - component: {fileID: 1335141578}
   m_Layer: 0
   m_Name: TargetPicker
   m_TagString: Untagged
@@ -2896,13 +2917,26 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1335141576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10.37, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 661467445}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1335141578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1335141576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c15fcd5c53dd224eb82c21db608bf79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicalPositionTarget: {fileID: 250180633}
+  targetOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1335141580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3622,6 +3656,16 @@ Prefab:
         type: 2}
       propertyPath: m_MoveSpeedMultiplier
       value: 0.625
+      objectReference: {fileID: 0}
+    - target: {fileID: 195492892377048832, guid: de9eaba3f941fe944a2df4e7abb3db4a,
+        type: 2}
+      propertyPath: m_BaseOffset
+      value: -0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 195492892377048832, guid: de9eaba3f941fe944a2df4e7abb3db4a,
+        type: 2}
+      propertyPath: m_Height
+      value: 1.78
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 136224552021386950, guid: de9eaba3f941fe944a2df4e7abb3db4a, type: 2}
