@@ -6,6 +6,7 @@ public class SoccerPlayer : MonoBehaviour {
 
     public GameObject soccerBall;
     public GameObject dribbleTarget;
+    public GameObject moveTarget;
     public Vector3 ballKickVector;
     public Vector3 ballTouchPoint;
 
@@ -14,20 +15,24 @@ public class SoccerPlayer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         soccerBall = GameObject.FindGameObjectWithTag("Ball");
+        moveTarget = GameObject.FindGameObjectWithTag("Target");
         Debug.Log(new Vector3(2,2,2) - new Vector3(3,3,3));
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (soccerBall) {
-            Vector3 tacticTargetVector = projectPointOntoFloor(transform.position) - projectPointOntoFloor(soccerBall.transform.position);
-            Debug.DrawRay(projectPointOntoFloor(soccerBall.transform.position), tacticTargetVector, Color.green);
+            Vector3 tacticTargetVector = ProjectPointOntoFloor(transform.position, 0) - ProjectPointOntoFloor(soccerBall.transform.position, 0);
+            Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), tacticTargetVector, Color.green);
 
             if (dribbleTarget){
-                Vector3 tacticPointVector = projectPointOntoFloor(dribbleTarget.transform.position) - projectPointOntoFloor(soccerBall.transform.position);
+                Vector3 tacticPointVector = ProjectPointOntoFloor(dribbleTarget.transform.position, 0) - ProjectPointOntoFloor(soccerBall.transform.position, 0);
                 ballKickVector = Vector3.ClampMagnitude(tacticPointVector, ballTouchDistance) * -1;
                 ballTouchPoint = soccerBall.transform.position + ballKickVector;
-                Debug.DrawRay(projectPointOntoFloor(soccerBall.transform.position), ballKickVector, Color.yellow);
+
+                moveTarget.transform.position = ProjectPointOntoFloor(ballTouchPoint, 0.1F);
+
+                Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), ballKickVector, Color.yellow);
             }
         }
     }
@@ -37,8 +42,8 @@ public class SoccerPlayer : MonoBehaviour {
         Gizmos.DrawIcon(ballTouchPoint, "Light Gizmo.tiff", true);
     }
 
-    Vector3 projectPointOntoFloor(Vector3 pointToProject) {
-        Vector3 projectedPoint = new Vector3(pointToProject.x, 0, pointToProject.z);
+    Vector3 ProjectPointOntoFloor(Vector3 pointToProject, float offset) {
+        Vector3 projectedPoint = new Vector3(pointToProject.x, offset, pointToProject.z);
         
         return projectedPoint;
     }
