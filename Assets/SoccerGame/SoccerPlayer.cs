@@ -30,7 +30,7 @@ public class SoccerPlayer : MonoBehaviour {
                 ballKickVector = Vector3.ClampMagnitude(tacticPointVector, ballTouchDistance) * -1;
                 ballTouchPoint = soccerBall.transform.position + ballKickVector;
 
-                moveTarget.transform.position = ProjectPointOntoFloor(ballTouchPoint, 0.1F);
+                moveTarget.transform.position = ProjectPointOntoFloor(ballTouchPoint, 0.01F);
 
                 Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), ballKickVector, Color.yellow);
             }
