@@ -35,6 +35,8 @@ public class SoccerPlayer : MonoBehaviour {
                 Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), ballKickVector, Color.yellow);
             }
         }
+
+
     }
 
     void OnDrawGizmos()

@@ -7,7 +7,8 @@ TagManager:
   - Fire
   - Ball
   - Target
-  - BallPosition
+  - SoccerWorld
+  - BallProjection
   layers:
   - Default
   - TransparentFX
