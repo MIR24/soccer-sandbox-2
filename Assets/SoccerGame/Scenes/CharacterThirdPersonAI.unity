@@ -1624,6 +1624,11 @@ CapsuleCollider:
   m_Height: 0.45208818
   m_Direction: 0
   m_Center: {x: -0.2054947, y: 0.0000000067520887, z: 0.000000051056947}
+--- !u!4 &653186250 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4149164310826066, guid: de9eaba3f941fe944a2df4e7abb3db4a,
+    type: 2}
+  m_PrefabInternal: {fileID: 2094546271}
 --- !u!1 &661467441
 GameObject:
   m_ObjectHideFlags: 0
@@ -2753,11 +2758,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fixTransforms: 1
   solver:
-    IKPosition: {x: 0, y: 0, z: 0}
+    IKPosition: {x: 0.94499946, y: 1.3046066, z: 2.9885104}
     IKPositionWeight: 1
-    root: {fileID: 0}
-    target: {fileID: 0}
-    spine: []
+    root: {fileID: 1206655633}
+    target: {fileID: 250180638}
+    spine:
+    - transform: {fileID: 1668262008}
+      weight: 0
+      solverPosition: {x: 0, y: 0, z: 0}
+      solverRotation: {x: 0, y: 0, z: 0, w: 0}
+      defaultLocalPosition: {x: -0.10531403, y: -0.00008385659, z: -2.3259054e-10}
+      defaultLocalRotation: {x: 4.0745185e-14, y: 0, z: -0, w: 1}
+      length: 0
+      sqrMag: 0
+      axis: {x: 0.02695325, y: 0.99963665, z: 0.0000005066395}
+    - transform: {fileID: 1878809622}
+      weight: 0
+      solverPosition: {x: 0, y: 0, z: 0}
+      solverRotation: {x: 0, y: 0, z: 0, w: 0}
+      defaultLocalPosition: {x: -0.10531482, y: -0.00008385659, z: -2.3258327e-10}
+      defaultLocalRotation: {x: -8.096637e-15, y: 0.000000010320556, z: -0.0037209948,
+        w: 0.9999931}
+      length: 0
+      sqrMag: 0
+      axis: {x: 0.019513488, y: 0.9998096, z: 0.0000005066395}
+    - transform: {fileID: 653186250}
+      weight: 0
+      solverPosition: {x: 0, y: 0, z: 0}
+      solverRotation: {x: 0, y: 0, z: 0, w: 0}
+      defaultLocalPosition: {x: -0.10531482, y: -0.00008385468, z: -2.3258327e-10}
+      defaultLocalRotation: {x: -1.1736887e-13, y: 0.000000010320554, z: -0.0037209955,
+        w: 0.9999931}
+      length: 0
+      sqrMag: 0
+      axis: {x: 0.012072325, y: 0.9999273, z: 0.0000005066395}
     head:
       transform: {fileID: 0}
       weight: 1
@@ -3457,6 +3491,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!4 &1668262008 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4769962388728186, guid: de9eaba3f941fe944a2df4e7abb3db4a,
+    type: 2}
+  m_PrefabInternal: {fileID: 2094546271}
 --- !u!1 &1780429782
 GameObject:
   m_ObjectHideFlags: 0
@@ -3697,6 +3736,11 @@ Transform:
 --- !u!1 &1878809621 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1416294896381454, guid: de9eaba3f941fe944a2df4e7abb3db4a,
+    type: 2}
+  m_PrefabInternal: {fileID: 2094546271}
+--- !u!4 &1878809622 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4329436656771322, guid: de9eaba3f941fe944a2df4e7abb3db4a,
     type: 2}
   m_PrefabInternal: {fileID: 2094546271}
 --- !u!153 &1878809623
