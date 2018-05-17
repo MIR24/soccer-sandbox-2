@@ -30,7 +30,10 @@ public class SoccerPlayer : MonoBehaviour {
 	void Update () {
         if (soccerBall) {
             Vector3 tacticTargetVector = ProjectPointOntoFloor(transform.position, 0) - ProjectPointOntoFloor(soccerBall.transform.position, 0);
-            float maneuverAngle = Vector3.SignedAngle(soccerBall.transform.position - transform.position, tacticPoint.transform.position - soccerBall.transform.position, Vector3.up);
+
+            Vector3 playerToBall = soccerBall.transform.position - transform.position;
+            Vector3 ballToTacticPoint = tacticPoint.transform.position - soccerBall.transform.position;
+            float maneuverAngle = Vector3.SignedAngle(playerToBall, ballToTacticPoint, Vector3.up);
 
             Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), tacticTargetVector, Color.green);
 
