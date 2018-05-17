@@ -12,8 +12,10 @@ public class SoccerPlayer : MonoBehaviour {
 
     public float ballTouchDistance = 0.1F;
 
-	// Use this for initialization
-	void Start () {
+    public bool dribbleStraightforward = false;
+
+    // Use this for initialization
+    void Start () {
         soccerBall = GameObject.FindGameObjectWithTag("Ball");
         moveTarget = GameObject.FindGameObjectWithTag("Target");
         Debug.Log(new Vector3(2,2,2) - new Vector3(3,3,3));
@@ -30,7 +32,8 @@ public class SoccerPlayer : MonoBehaviour {
                 ballKickVector = Vector3.ClampMagnitude(tacticPointVector, ballTouchDistance) * -1;
                 ballTouchPoint = soccerBall.transform.position + ballKickVector;
 
-                moveTarget.transform.position = ProjectPointOntoFloor(ballTouchPoint, 0.01F);
+                if (!dribbleStraightforward) moveTarget.transform.position = ProjectPointOntoFloor(ballTouchPoint, 0.01F);
+                else moveTarget.transform.position = ProjectPointOntoFloor(soccerBall.transform.position, 0.01F);
 
                 Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), ballKickVector, Color.yellow);
             }
@@ -44,8 +47,8 @@ public class SoccerPlayer : MonoBehaviour {
         Gizmos.DrawIcon(ballTouchPoint, "Light Gizmo.tiff", true);
     }
 
-    Vector3 ProjectPointOntoFloor(Vector3 pointToProject, float offset) {
-        Vector3 projectedPoint = new Vector3(pointToProject.x, offset, pointToProject.z);
+    Vector3 ProjectPointOntoFloor(Vector3 pointToProject, float yOffset) {
+        Vector3 projectedPoint = new Vector3(pointToProject.x, yOffset, pointToProject.z);
         
         return projectedPoint;
     }
