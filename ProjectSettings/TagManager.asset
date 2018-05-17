@@ -9,6 +9,7 @@ TagManager:
   - Target
   - SoccerWorld
   - BallProjection
+  - TacticPoint
   layers:
   - Default
   - TransparentFX

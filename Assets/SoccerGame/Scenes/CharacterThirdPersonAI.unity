@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: a7bed68887a07e34394d4191b3081359, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.24939331, g: 0.3117381, b: 0.36743337, a: 1}
+  m_IndirectSpecularColor: {r: 0.2493937, g: 0.31173843, b: 0.36743385, a: 1}
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -835,7 +835,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0.1
-  m_AngularDrag: 0.2
+  m_AngularDrag: 0.3
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -2671,7 +2671,7 @@ GameObject:
   - component: {fileID: 1182659419}
   m_Layer: 0
   m_Name: TacticPoint
-  m_TagString: Untagged
+  m_TagString: TacticPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2793,22 +2793,23 @@ MonoBehaviour:
       sqrMag: 0
       axis: {x: 0.012072325, y: 0.9999273, z: 0.0000005066395}
     head:
-      transform: {fileID: 0}
+      transform: {fileID: 1259306385}
       weight: 1
       solverPosition: {x: 0, y: 0, z: 0}
       solverRotation: {x: 0, y: 0, z: 0, w: 1}
-      defaultLocalPosition: {x: 0, y: 0, z: 0}
-      defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+      defaultLocalPosition: {x: -0.1367727, y: 0, z: 1.1641533e-13}
+      defaultLocalRotation: {x: 4.7719963e-11, y: -0.00000040002516, z: 0.14414449,
+        w: 0.98955667}
       length: 0
       sqrMag: 0
-      axis: {x: -1, y: -0, z: -0}
+      axis: {x: 0.0000013113022, y: 0.99999976, z: 0.000000834465}
     eyes: []
-    bodyWeight: 0.5
-    headWeight: 0.5
+    bodyWeight: 0.3
+    headWeight: 0.6
     eyesWeight: 1
-    clampWeight: 0.5
-    clampWeightHead: 0.5
-    clampWeightEyes: 0.5
+    clampWeight: 0
+    clampWeightHead: 0
+    clampWeightEyes: 0
     clampSmoothing: 2
     spineWeightCurve:
       serializedVersion: 2
@@ -2858,9 +2859,13 @@ MonoBehaviour:
   soccerBall: {fileID: 0}
   dribbleTarget: {fileID: 1182659418}
   moveTarget: {fileID: 0}
+  ballProjection: {fileID: 0}
+  tacticPoint: {fileID: 0}
   ballKickVector: {x: 0, y: 0, z: 0}
   ballTouchPoint: {x: 0, y: 0, z: 0}
-  ballTouchDistance: 0.35
+  ballTouchDistance: 0.3
+  ballTouchDistanceCoeff: 150
+  dribbleStraightforward: 0
 --- !u!1 &1234856644 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1067047423249416, guid: de9eaba3f941fe944a2df4e7abb3db4a,
@@ -3057,6 +3062,11 @@ Light:
 --- !u!1 &1259306384 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1610815083239392, guid: de9eaba3f941fe944a2df4e7abb3db4a,
+    type: 2}
+  m_PrefabInternal: {fileID: 2094546271}
+--- !u!4 &1259306385 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4109628292457616, guid: de9eaba3f941fe944a2df4e7abb3db4a,
     type: 2}
   m_PrefabInternal: {fileID: 2094546271}
 --- !u!153 &1259306386
@@ -3717,7 +3727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
-  rotationSpeed: 100
+  rotationSpeed: 500
 --- !u!4 &1794327663
 Transform:
   m_ObjectHideFlags: 0
