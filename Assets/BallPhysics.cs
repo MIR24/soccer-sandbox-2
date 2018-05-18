@@ -19,7 +19,7 @@ public class BallPhysics : MonoBehaviour {
     {
         Debug.Log(collision.gameObject.transform.root.gameObject.tag);
         if(collision.gameObject.transform.root.gameObject.tag == "Player")
-            gameObject.GetComponent<Rigidbody>().AddForce((tacticPoint.transform.position-transform.position)/2F, ForceMode.Impulse);
+            gameObject.GetComponent<Rigidbody>().AddForce((tacticPoint.transform.position-transform.position).normalized/1.1F, ForceMode.Impulse);
     }
 
 
