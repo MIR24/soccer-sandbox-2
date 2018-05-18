@@ -10,6 +10,7 @@ TagManager:
   - SoccerWorld
   - BallProjection
   - TacticPoint
+  - Route
   layers:
   - Default
   - TransparentFX

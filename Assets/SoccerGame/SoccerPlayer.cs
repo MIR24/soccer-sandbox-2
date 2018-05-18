@@ -9,8 +9,13 @@ public class SoccerPlayer : MonoBehaviour {
     public GameObject moveTarget;
     public GameObject ballProjection;
     public GameObject tacticPoint;
+    public GameObject route;
+    public GameObject wayPoint;
     public Vector3 ballKickVector;
     public Vector3 ballTouchPoint;
+    public float wayPointArrivalDistance = 0.3F;
+
+    public int ballProjectionRotationSpeed = 10;
 
     public float ballTouchDistance = 0.1F;
 
@@ -18,8 +23,11 @@ public class SoccerPlayer : MonoBehaviour {
 
     public bool dribbleStraightforward = false;
 
+    public float dribbleStraightForwardDeviation = 20F;
+
     // Use this for initialization
     void Start () {
+        route = GameObject.FindGameObjectWithTag("Route");
         ballProjection = GameObject.FindGameObjectWithTag("BallProjection");
         tacticPoint = GameObject.FindGameObjectWithTag("TacticPoint");
         soccerBall = GameObject.FindGameObjectWithTag("Ball");
@@ -32,9 +40,14 @@ public class SoccerPlayer : MonoBehaviour {
             Vector3 tacticTargetVector = ProjectPointOntoFloor(transform.position, 0) - ProjectPointOntoFloor(soccerBall.transform.position, 0);
 
             Vector3 playerToBall = soccerBall.transform.position - transform.position;
-            Vector3 ballToTacticPoint = tacticPoint.transform.position - soccerBall.transform.position;
-            float maneuverAngle = Vector3.SignedAngle(playerToBall, ballToTacticPoint, Vector3.up);
+            Vector3 tacticPointToBall = tacticPoint.transform.position - soccerBall.transform.position;
+            float maneuverAngle = Vector3.SignedAngle(playerToBall, tacticPointToBall, Vector3.up);
 
+            //if (Mathf.Abs(maneuverAngle) < dribbleStraightForwardDeviation) dribbleStraightforward = true;
+            //else dribbleStraightforward = false;
+
+            //Debug.Log(ballProjection.transform.eulerAngles);
+            //Debug.Log(maneuverAngle);
             Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), tacticTargetVector, Color.green);
 
             ballTouchDistance = Mathf.Abs(maneuverAngle) / ballTouchDistanceCoeff;
@@ -45,24 +58,22 @@ public class SoccerPlayer : MonoBehaviour {
                 ballTouchPoint = soccerBall.transform.position + ballKickVector;
 
                 if (!dribbleStraightforward) moveTarget.transform.position = ProjectPointOntoFloor(ballTouchPoint, 0.01F);
-                else moveTarget.transform.position = ProjectPointOntoFloor(soccerBall.transform.position, 0.01F);
+                else moveTarget.transform.position = Vector3.Slerp(
+                    moveTarget.transform.position,
+                    ProjectPointOntoFloor(soccerBall.transform.position, 0.01F), 0.1F);
 
                 Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), ballKickVector, Color.yellow);
             }
-
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                Debug.Log("Dribble Straight Forward");
-                dribbleStraightforward = true;
-            }
-            if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow)))
-            {
-                Debug.Log("Dribble Turns");
-                dribbleStraightforward = false;
-            }
         }
 
-
+        if (route && !wayPoint)
+        {
+            wayPoint = route.transform.GetChild(0).gameObject;
+            tacticPoint.transform.position = wayPoint.transform.position;
+        }
+        else if (Vector3.Distance(ballProjection.transform.position, wayPoint.transform.position) < wayPointArrivalDistance) {
+            Destroy(wayPoint);
+        }
     }
 
     void OnDrawGizmos()
