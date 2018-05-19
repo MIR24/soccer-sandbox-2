@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BallPhysics : MonoBehaviour {
     public GameObject tacticPoint;
+    public float forceClamp = 1.2F;
 
     // Use this for initialization
     void Start () {
@@ -19,7 +20,7 @@ public class BallPhysics : MonoBehaviour {
     {
         Debug.Log(collision.gameObject.transform.root.gameObject.tag);
         if(collision.gameObject.transform.root.gameObject.tag == "Player")
-            gameObject.GetComponent<Rigidbody>().AddForce((tacticPoint.transform.position-transform.position).normalized/1.1F, ForceMode.Impulse);
+            gameObject.GetComponent<Rigidbody>().AddForce((tacticPoint.transform.position-transform.position).normalized/forceClamp, ForceMode.Acceleration);
     }
 
 
