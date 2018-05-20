@@ -982,8 +982,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tacticPoint: {fileID: 0}
-  forceClamp: 1000
-  maxSpeed: 7.5
+  forceClamp: 0.025
+  maxSpeed: 5
 --- !u!208 &250180640
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -4451,12 +4451,12 @@ Prefab:
     - target: {fileID: 114089296177297192, guid: de9eaba3f941fe944a2df4e7abb3db4a,
         type: 2}
       propertyPath: m_MovingTurnSpeed
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 195492892377048832, guid: de9eaba3f941fe944a2df4e7abb3db4a,
         type: 2}
       propertyPath: m_Radius
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1059937288153988, guid: de9eaba3f941fe944a2df4e7abb3db4a, type: 2}
       propertyPath: m_IsActive
