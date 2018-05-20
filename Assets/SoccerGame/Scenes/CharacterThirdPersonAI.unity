@@ -982,7 +982,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tacticPoint: {fileID: 0}
-  forceClamp: 0.08
+  forceClamp: 1000
+  maxSpeed: 7.5
 --- !u!208 &250180640
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -992,7 +993,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.05, y: 0.05, z: 0.05}
+  m_Extents: {x: 0.025, y: 0.025, z: 0.025}
   m_MoveThreshold: 10
   m_Carve: 0
   m_CarveOnlyStationary: 1
@@ -3262,7 +3263,7 @@ MonoBehaviour:
   wayPoint: {fileID: 0}
   ballKickVector: {x: 0, y: 0, z: 0}
   ballTouchPoint: {x: 0, y: 0, z: 0}
-  wayPointArrivalDistance: 1
+  wayPointArrivalDistance: 1.5
   ballProjectionRotationSpeed: 500
   ballTouchDistance: 1
   ballTouchDistanceCoeff: 150
@@ -4431,12 +4432,12 @@ Prefab:
     - target: {fileID: 195492892377048832, guid: de9eaba3f941fe944a2df4e7abb3db4a,
         type: 2}
       propertyPath: m_Acceleration
-      value: 5
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 195492892377048832, guid: de9eaba3f941fe944a2df4e7abb3db4a,
         type: 2}
       propertyPath: m_AngularSpeed
-      value: 60
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 1059937288153988, guid: de9eaba3f941fe944a2df4e7abb3db4a, type: 2}
       propertyPath: m_TagString
@@ -4445,17 +4446,21 @@ Prefab:
     - target: {fileID: 114089296177297192, guid: de9eaba3f941fe944a2df4e7abb3db4a,
         type: 2}
       propertyPath: m_StationaryTurnSpeed
-      value: 125
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 114089296177297192, guid: de9eaba3f941fe944a2df4e7abb3db4a,
         type: 2}
       propertyPath: m_MovingTurnSpeed
-      value: 240
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 195492892377048832, guid: de9eaba3f941fe944a2df4e7abb3db4a,
         type: 2}
       propertyPath: m_Radius
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059937288153988, guid: de9eaba3f941fe944a2df4e7abb3db4a, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 136224552021386950, guid: de9eaba3f941fe944a2df4e7abb3db4a, type: 2}
