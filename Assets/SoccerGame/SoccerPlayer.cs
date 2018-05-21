@@ -43,11 +43,6 @@ public class SoccerPlayer : MonoBehaviour {
             Vector3 tacticPointToBall = tacticPoint.transform.position - soccerBall.transform.position;
             float maneuverAngle = Vector3.SignedAngle(playerToBall, tacticPointToBall, Vector3.up);
 
-            //if (Mathf.Abs(maneuverAngle) < dribbleStraightForwardDeviation) dribbleStraightforward = true;
-            //else dribbleStraightforward = false;
-
-            //Debug.Log(ballProjection.transform.eulerAngles);
-            //Debug.Log(maneuverAngle);
             Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), tacticTargetVector, Color.green);
 
             ballTouchDistance = Mathf.Abs(maneuverAngle) / ballTouchDistanceCoeff;
