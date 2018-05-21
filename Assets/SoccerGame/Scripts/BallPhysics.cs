@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using com.ootii.Messages;
 
 public class BallPhysics : MonoBehaviour {
     public GameObject tacticPoint;
@@ -22,9 +23,15 @@ public class BallPhysics : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.transform.root.gameObject.tag);
+        Debug.Log("Ball collided with (root tag, root name, object name):" 
+            + collision.gameObject.transform.root.gameObject.tag + ", " 
+            + collision.gameObject.transform.root.gameObject.name + ", "
+            + collision.gameObject.name);
         if (collision.gameObject.transform.root.gameObject.tag == "Player")
-            gameObject.GetComponent<Rigidbody>().AddForce((tacticPoint.transform.position - transform.position).normalized / forceClamp, ForceMode.Acceleration);
+        {
+            MessageDispatcher.SendMessage(this, "BALL_HIT", collision.gameObject.transform.root.gameObject.name, 0);
+            myRigidBody.AddForce((tacticPoint.transform.position - transform.position).normalized / forceClamp, ForceMode.Acceleration);
+        }
     }
 
     private void FixedUpdate()

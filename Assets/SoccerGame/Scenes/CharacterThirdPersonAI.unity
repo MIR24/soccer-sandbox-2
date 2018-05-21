@@ -2137,7 +2137,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1024994104}
   - component: {fileID: 1024994107}
-  - component: {fileID: 1024994106}
   - component: {fileID: 1024994105}
   m_Layer: 0
   m_Name: SoccerKickPoint
@@ -2193,18 +2192,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &1024994106
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1024994103}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1024994107
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4171,7 +4158,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1059937288153988, guid: de9eaba3f941fe944a2df4e7abb3db4a, type: 2}
       propertyPath: m_TagString
-      value: Player
+      value: MainCamera
       objectReference: {fileID: 0}
     - target: {fileID: 114089296177297192, guid: de9eaba3f941fe944a2df4e7abb3db4a,
         type: 2}
@@ -4192,6 +4179,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1059937288153988, guid: de9eaba3f941fe944a2df4e7abb3db4a, type: 2}
+      propertyPath: m_Name
+      value: Dimas
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 136224552021386950, guid: de9eaba3f941fe944a2df4e7abb3db4a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: de9eaba3f941fe944a2df4e7abb3db4a, type: 2}
@@ -4206,7 +4197,7 @@ GameObject:
   - component: {fileID: 2120767493}
   m_Layer: 0
   m_Name: GeometryStatic
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967294

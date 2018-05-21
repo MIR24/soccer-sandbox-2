@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using com.ootii.Messages;
 
 public class SoccerPlayer : MonoBehaviour {
 
@@ -40,10 +41,11 @@ public class SoccerPlayer : MonoBehaviour {
         moveTarget = GameObject.FindGameObjectWithTag("Target");
         m_Animator = gameObject.GetComponent<Animator>();
         soccerKickPointLocal = transform.Find("SoccerKickPoint").gameObject;
+        MessageDispatcher.AddListener("BALL_HIT", OnBallHit, true);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         if (soccerBall) {
             Vector3 tacticTargetVector = ProjectPointOntoFloor(transform.position, 0) - ProjectPointOntoFloor(soccerBall.transform.position, 0);
 
@@ -109,8 +111,15 @@ public class SoccerPlayer : MonoBehaviour {
     {
         m_Animator.SetTrigger("SoccerKick");
         soccerKickPointGlobal = new GameObject("SoccerKickPointGlobal");
+        soccerKickPointGlobal.name = gameObject.name;
+        soccerKickPointGlobal.tag = "Player";
         soccerKickPointGlobal.transform.position = ProjectPointOntoFloor(soccerKickPointLocal.transform.position,0);
         transform.parent = soccerKickPointGlobal.transform;
         kickMode = false;
+    }
+
+    void OnBallHit(IMessage rMessage)
+    {
+        Debug.Log((string)rMessage.Data + " hits the ball");
     }
 }

@@ -11,6 +11,7 @@ TagManager:
   - BallProjection
   - TacticPoint
   - Route
+  - Environment
   layers:
   - Default
   - TransparentFX
