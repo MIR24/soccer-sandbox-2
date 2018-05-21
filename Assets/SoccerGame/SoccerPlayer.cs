@@ -13,6 +13,8 @@ public class SoccerPlayer : MonoBehaviour {
     public GameObject wayPoint;
     public Vector3 ballKickVector;
     public Vector3 ballTouchPoint;
+    public Animator m_Animator;
+    public bool kickMode = false;
     public float wayPointArrivalDistance = 0.3F;
 
     public int ballProjectionRotationSpeed = 10;
@@ -32,7 +34,8 @@ public class SoccerPlayer : MonoBehaviour {
         tacticPoint = GameObject.FindGameObjectWithTag("TacticPoint");
         soccerBall = GameObject.FindGameObjectWithTag("Ball");
         moveTarget = GameObject.FindGameObjectWithTag("Target");
-	}
+        m_Animator = gameObject.GetComponent<Animator>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -63,11 +66,20 @@ public class SoccerPlayer : MonoBehaviour {
 
         if (route && !wayPoint)
         {
-            wayPoint = route.transform.GetChild(0).gameObject;
-            tacticPoint.transform.position = wayPoint.transform.position;
+            if (route.transform.childCount > 0)
+            {
+                wayPoint = route.transform.GetChild(0).gameObject;
+                tacticPoint.transform.position = wayPoint.transform.position;
+            }
         }
         else if (Vector3.Distance(ballProjection.transform.position, wayPoint.transform.position) < wayPointArrivalDistance) {
             Destroy(wayPoint);
+        }
+
+        if (kickMode)
+        {
+            m_Animator.SetTrigger("SoccerKick");
+            kickMode = false;
         }
     }
 
