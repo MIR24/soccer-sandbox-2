@@ -11,11 +11,14 @@ public class SoccerPlayer : MonoBehaviour {
     public GameObject tacticPoint;
     public GameObject route;
     public GameObject wayPoint;
+    public GameObject soccerKickPointLocal;
+    public GameObject soccerKickPointGlobal;
     public Vector3 ballKickVector;
     public Vector3 ballTouchPoint;
     public Animator m_Animator;
     public bool kickMode = false;
     public float wayPointArrivalDistance = 0.3F;
+    public float soccerKickCorrectionRate = 0.005F;
 
     public int ballProjectionRotationSpeed = 10;
 
@@ -27,6 +30,7 @@ public class SoccerPlayer : MonoBehaviour {
 
     public float dribbleStraightForwardDeviation = 20F;
 
+
     // Use this for initialization
     void Start () {
         route = GameObject.FindGameObjectWithTag("Route");
@@ -35,6 +39,7 @@ public class SoccerPlayer : MonoBehaviour {
         soccerBall = GameObject.FindGameObjectWithTag("Ball");
         moveTarget = GameObject.FindGameObjectWithTag("Target");
         m_Animator = gameObject.GetComponent<Animator>();
+        soccerKickPointLocal = transform.Find("SoccerKickPoint").gameObject;
     }
 	
 	// Update is called once per frame
@@ -78,8 +83,14 @@ public class SoccerPlayer : MonoBehaviour {
 
         if (kickMode)
         {
-            m_Animator.SetTrigger("SoccerKick");
-            kickMode = false;
+            PerformSoccerKick();
+        }
+
+        if (soccerKickPointGlobal)
+        {
+            soccerKickPointGlobal.transform.position = Vector3.Slerp(
+                soccerKickPointGlobal.transform.position,
+                ProjectPointOntoFloor(soccerBall.transform.position,0), soccerKickCorrectionRate);
         }
     }
 
@@ -92,5 +103,14 @@ public class SoccerPlayer : MonoBehaviour {
         Vector3 projectedPoint = new Vector3(pointToProject.x, yOffset, pointToProject.z);
         
         return projectedPoint;
+    }
+
+    void PerformSoccerKick()
+    {
+        m_Animator.SetTrigger("SoccerKick");
+        soccerKickPointGlobal = new GameObject("SoccerKickPointGlobal");
+        soccerKickPointGlobal.transform.position = ProjectPointOntoFloor(soccerKickPointLocal.transform.position,0);
+        transform.parent = soccerKickPointGlobal.transform;
+        kickMode = false;
     }
 }
