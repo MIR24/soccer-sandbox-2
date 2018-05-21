@@ -12,12 +12,12 @@ public class SoccerPlayer : MonoBehaviour {
     public GameObject tacticPoint;
     public GameObject route;
     public GameObject wayPoint;
-    public GameObject soccerKickPointLocal;
-    public GameObject soccerKickPointGlobal;
-    public Vector3 ballKickVector;
+    public GameObject goalKickPointLocal;
+    public GameObject goalKickPointGlobal;
+    public Vector3 ballHitVector;
     public Vector3 ballTouchPoint;
     public Animator m_Animator;
-    public bool kickMode = false;
+    public bool goalKickMode = false;
     public float wayPointArrivalDistance = 0.3F;
     public float soccerKickCorrectionRate = 0.005F;
 
@@ -40,7 +40,7 @@ public class SoccerPlayer : MonoBehaviour {
         soccerBall = GameObject.FindGameObjectWithTag("Ball");
         moveTarget = GameObject.FindGameObjectWithTag("Target");
         m_Animator = gameObject.GetComponent<Animator>();
-        soccerKickPointLocal = transform.Find("SoccerKickPoint").gameObject;
+        goalKickPointLocal = transform.Find("SoccerKickPoint").gameObject;
         MessageDispatcher.AddListener("BALL_HIT", OnBallHit, true);
     }
 
@@ -57,17 +57,18 @@ public class SoccerPlayer : MonoBehaviour {
 
             ballTouchDistance = Mathf.Abs(maneuverAngle) / ballTouchDistanceCoeff;
 
-            if (dribbleTarget) {
+            if (goalKickMode) {
+                Vector3 goalKickPointToBall = soccerBall.transform.position - goalKickPointLocal.transform.position;
+                moveTarget.transform.position = transform.position + goalKickPointToBall;
+
+            } else if (dribbleTarget) {
                 Vector3 tacticPointVector = ProjectPointOntoFloor(dribbleTarget.transform.position, 0) - ProjectPointOntoFloor(soccerBall.transform.position, 0);
-                ballKickVector = Vector3.ClampMagnitude(tacticPointVector, ballTouchDistance) * -1;
-                ballTouchPoint = soccerBall.transform.position + ballKickVector;
+                ballHitVector = Vector3.ClampMagnitude(tacticPointVector, ballTouchDistance) * -1;
+                ballTouchPoint = soccerBall.transform.position + ballHitVector;
 
-                if (!dribbleStraightforward) moveTarget.transform.position = ProjectPointOntoFloor(ballTouchPoint, 0.01F);
-                else moveTarget.transform.position = Vector3.Slerp(
-                    moveTarget.transform.position,
-                    ProjectPointOntoFloor(soccerBall.transform.position, 0.01F), 0.1F);
+                moveTarget.transform.position = ProjectPointOntoFloor(ballTouchPoint, 0.01F);
 
-                Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), ballKickVector, Color.yellow);
+                Debug.DrawRay(ProjectPointOntoFloor(soccerBall.transform.position, 0), ballHitVector, Color.yellow);
             }
         }
 
@@ -83,15 +84,15 @@ public class SoccerPlayer : MonoBehaviour {
             Destroy(wayPoint);
         }
 
-        if (kickMode)
+        if (goalKickMode)
         {
-            PerformSoccerKick();
+            //PerformGoalKick();
         }
 
-        if (soccerKickPointGlobal)
+        if (goalKickPointGlobal)
         {
-            soccerKickPointGlobal.transform.position = Vector3.Slerp(
-                soccerKickPointGlobal.transform.position,
+            goalKickPointGlobal.transform.position = Vector3.Slerp(
+                goalKickPointGlobal.transform.position,
                 ProjectPointOntoFloor(soccerBall.transform.position,0), soccerKickCorrectionRate);
         }
     }
@@ -107,19 +108,26 @@ public class SoccerPlayer : MonoBehaviour {
         return projectedPoint;
     }
 
-    void PerformSoccerKick()
+    void PerformGoalKick()
     {
         m_Animator.SetTrigger("SoccerKick");
-        soccerKickPointGlobal = new GameObject("SoccerKickPointGlobal");
-        soccerKickPointGlobal.name = gameObject.name;
-        soccerKickPointGlobal.tag = "Player";
-        soccerKickPointGlobal.transform.position = ProjectPointOntoFloor(soccerKickPointLocal.transform.position,0);
-        transform.parent = soccerKickPointGlobal.transform;
-        kickMode = false;
+        goalKickPointGlobal = new GameObject("SoccerKickPointGlobal");
+        goalKickPointGlobal.name = gameObject.name;
+        goalKickPointGlobal.tag = "Player";
+        goalKickPointGlobal.transform.position = ProjectPointOntoFloor(goalKickPointLocal.transform.position,0);
+        transform.parent = goalKickPointGlobal.transform;
+        goalKickMode = false;
+        MessageDispatcher.SendMessage(this, "GOAL_KICK", gameObject.name, 0);
     }
 
     void OnBallHit(IMessage rMessage)
     {
         Debug.Log((string)rMessage.Data + " hits the ball");
+        if(gameObject.name == (string)rMessage.Data && transform.parent != null)
+        {
+            GameObject soccerKickPointTmp = transform.parent.gameObject;
+            transform.parent = null;
+            Destroy(soccerKickPointTmp);
+        }
     }
 }
