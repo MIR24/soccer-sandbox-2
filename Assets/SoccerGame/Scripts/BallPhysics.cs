@@ -5,6 +5,7 @@ using com.ootii.Messages;
 
 public class BallPhysics : MonoBehaviour {
     public GameObject tacticPoint;
+    public GameObject goalKickPoint;
     public float forceClamp = 1.2F;
     public float maxSpeed = 1f;
     public float goalKickMaxSpeed = 50f;
@@ -16,6 +17,7 @@ public class BallPhysics : MonoBehaviour {
     // Use this for initialization
     void Start () {
         tacticPoint = GameObject.FindGameObjectWithTag("TacticPoint");
+        goalKickPoint = GameObject.Find("GoalKickDirection");
         myRigidBody = gameObject.GetComponent<Rigidbody>();
         MessageDispatcher.AddListener("GOAL_KICK", OnGoalKick, true);
     }
@@ -37,7 +39,7 @@ public class BallPhysics : MonoBehaviour {
 
             if (collision.gameObject.transform.root.gameObject.name == performingGoalKick)
             {
-                Vector3 goalKickDirection = tacticPoint.transform.position - transform.position;
+                Vector3 goalKickDirection = goalKickPoint.transform.position - transform.position;
                 Debug.DrawRay(transform.position, goalKickDirection, Color.yellow, 3F);
                 myRigidBody.AddForce(goalKickDirection.normalized * goalKickPower, ForceMode.Impulse);
                 maxSpeed = goalKickMaxSpeed;
