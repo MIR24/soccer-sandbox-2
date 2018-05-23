@@ -98,7 +98,7 @@ public class SoccerPlayer : MonoBehaviour {
         }
 
         //if (playerKickMode == BallKickMode.targetLockedWithRun)
-        if (goalKickTargetLocked) PerformGoalKick();
+        if ((playerKickMode == BallKickMode.approachFast || playerKickMode == BallKickMode.approachWithRun) && goalKickTargetLocked) PerformGoalKick();
 
         if (ballKickPointPositionedRig)
         {
