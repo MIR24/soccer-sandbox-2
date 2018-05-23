@@ -28,5 +28,11 @@ public class SoccerWorld : MonoBehaviour {
             MessageDispatcher.SendMessage(this, "GOAL_KICK_CLICK", "Dummy Data", 0);
             Debug.Log("Clicked the Goal Kick button");
         }
+        if (GUI.Button(new Rect(10, 50, 75, 30), "Pass"))
+        {
+            MessageDispatcher.SendMessage(this, "GOAL_KICK_FAST_CLICK", "Dummy Data", 0);
+            Debug.Log("Clicked the Goal Kick Fast button");
+        }
     }
+
 }
