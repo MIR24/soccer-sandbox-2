@@ -223,7 +223,6 @@ public class SoccerPlayer : MonoBehaviour {
             );
             kickPointToBallDistance = Vector3.Distance(ballKickPointWithRunRelative.transform.position, soccerWorld.soccerBall.transform.position);
             Debug.Log(gameObject.name + " setting up move target approaching with run");
-            //if (Mathf.Abs(kickPointToBallAngle) < 5 && kickPointToBallDistance < 0.2) playerKickMode = BallKickMode.targetLockedWithRun;
 
         } else if (playerKickMode == BallKickMode.approachFast) {
             goalKickPointToBall = soccerWorld.soccerBall.transform.position - ballKickPointFastRelative.transform.position;
@@ -234,7 +233,6 @@ public class SoccerPlayer : MonoBehaviour {
             );
             Debug.Log(gameObject.name + " setting up move target approaching fast");
             kickPointToBallDistance = Vector3.Distance(ballKickPointFastRelative.transform.position, soccerWorld.soccerBall.transform.position);
-            //if (Mathf.Abs(kickPointToBallAngle) < 5 && kickPointToBallDistance < 0.2) playerKickMode = BallKickMode.targetLockedFast;
         }
 
         moveTarget.transform.position = transform.position + goalKickPointToBall;
