@@ -39,6 +39,7 @@ public class SoccerPlayer : MonoBehaviour {
     public float goalKickFastMaxSpeed = 20F;
     public float goalKickFastForceClamp = 0.05F;
     public bool goalKickTargetLocked = false;
+    public float dribbleKickDirectionLerp = 0.5F;
 
     private NavMeshAgent soccerPlayerNavigator;
 
@@ -150,9 +151,14 @@ public class SoccerPlayer : MonoBehaviour {
         if (gameObject.name == (string)rMessage.Data)
         {
             Vector3 goalKickDirection = new Vector3();
+            Vector3 tacticPointDirection = new Vector3();
             //Perform ball hit
             if(playerKickMode == BallKickMode.dribble) {
-                goalKickDirection = tacticPoint.transform.position - soccerWorld.soccerBall.transform.position;
+                //Vector3 localForward = transform.localToWorldMatrix (transform.forward);
+                Debug.DrawRay(transform.position, transform.forward, Color.yellow, 3F);
+                tacticPointDirection = tacticPoint.transform.position - soccerWorld.soccerBall.transform.position;
+                //goalKickDirection = tacticPoint.transform.position - soccerWorld.soccerBall.transform.position;
+                goalKickDirection = Vector3.Slerp(transform.forward, tacticPointDirection, dribbleKickDirectionLerp);
                 soccerWorld.soccerBallRigidBody.AddForce(goalKickDirection.normalized / dribbleForceClamp, ForceMode.Acceleration);
                 Debug.DrawRay(soccerWorld.soccerBall.transform.position, goalKickDirection.normalized, Color.red, 2F);
                 Debug.Log("Applied force for dribble kick");
