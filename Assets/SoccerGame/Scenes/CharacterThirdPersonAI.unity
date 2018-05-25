@@ -275,8 +275,6 @@ GameObject:
   - component: {fileID: 77945254}
   - component: {fileID: 77945253}
   - component: {fileID: 77945252}
-  - component: {fileID: 77945251}
-  - component: {fileID: 77945250}
   - component: {fileID: 77945257}
   m_Layer: 0
   m_Name: MainCapture
@@ -285,30 +283,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &77945250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114000011981344334, guid: 7fb4eb193786376458450101f3cdd3b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 77945249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0d01430cb7446d4787e1549b55f0a70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &77945251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114000010112954990, guid: 7fb4eb193786376458450101f3cdd3b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 77945249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53bf4be83c4174504b904e958637cced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!81 &77945252
 AudioListener:
   m_ObjectHideFlags: 0
@@ -816,7 +790,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100118, guid: 959d14bf134f54a6e993fe6ca6e063c0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 959d14bf134f54a6e993fe6ca6e063c0, type: 3}
@@ -1084,6 +1058,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 963946083}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &990227209 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1171373331728076, guid: 6bbeb16a0e678ba41826582f96093a88,
+    type: 2}
+  m_PrefabInternal: {fileID: 2011312831}
 --- !u!1001 &1142797010
 Prefab:
   m_ObjectHideFlags: 0
@@ -1594,7 +1573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b47a14823701e4aa812590b2f326e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeScale: 0.25
+  timeScale: 0.5
   soccerBall: {fileID: 0}
   soccerBallRigidBody: {fileID: 0}
   soccerBallLogic: {fileID: 0}
@@ -1763,6 +1742,52 @@ Prefab:
         type: 2}
       propertyPath: m_Speed
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137409619596798, guid: 6bbeb16a0e678ba41826582f96093a88, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 4.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137409619596798, guid: 6bbeb16a0e678ba41826582f96093a88, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 114499858646719106, guid: 6bbeb16a0e678ba41826582f96093a88,
+        type: 2}
+      propertyPath: goalKickWithRunPower
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137409619596798, guid: 6bbeb16a0e678ba41826582f96093a88, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 114499858646719106, guid: 6bbeb16a0e678ba41826582f96093a88,
+        type: 2}
+      propertyPath: goalKickFastForceClamp
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361544728277232, guid: 6bbeb16a0e678ba41826582f96093a88, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.673
+      objectReference: {fileID: 0}
+    - target: {fileID: 114499858646719106, guid: 6bbeb16a0e678ba41826582f96093a88,
+        type: 2}
+      propertyPath: goalKickWithRunMaxSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114499858646719106, guid: 6bbeb16a0e678ba41826582f96093a88,
+        type: 2}
+      propertyPath: goalKickWithRunForceClamp
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114499858646719106, guid: 6bbeb16a0e678ba41826582f96093a88,
+        type: 2}
+      propertyPath: ballHitAgent
+      value: 
+      objectReference: {fileID: 990227209}
+    - target: {fileID: 114499858646719106, guid: 6bbeb16a0e678ba41826582f96093a88,
+        type: 2}
+      propertyPath: ballHitAgentInteractDistance
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6bbeb16a0e678ba41826582f96093a88, type: 2}

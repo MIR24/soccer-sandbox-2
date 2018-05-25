@@ -39,7 +39,13 @@ public class SoccerPlayer : MonoBehaviour {
     public float goalKickFastMaxSpeed = 20F;
     public float goalKickFastForceClamp = 0.05F;
     public bool goalKickTargetLocked = false;
+    public float goalKickForceTimeout = 0F;
+    public float goalKickForceTimeoutLength = 1F;
     public float dribbleKickDirectionLerp = 0.5F;
+    public float debugRayDuration = 1F;
+    public bool debugUpdate = false;
+    public GameObject ballHitAgent;
+    public float ballHitAgentInteractDistance = 0.1F;
 
     private NavMeshAgent soccerPlayerNavigator;
 
@@ -63,6 +69,7 @@ public class SoccerPlayer : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (goalKickForceTimeout > 0) goalKickForceTimeout = goalKickForceTimeout - Time.deltaTime;
         if (finalSpeed > -1) {
             if (currentSpeed != finalSpeed)
             {
@@ -98,8 +105,11 @@ public class SoccerPlayer : MonoBehaviour {
             Destroy(wayPoint);
         }
 
-        //if (playerKickMode == BallKickMode.targetLockedWithRun)
         if ((playerKickMode == BallKickMode.approachFast || playerKickMode == BallKickMode.approachWithRun) && goalKickTargetLocked) PerformGoalKick();
+        if (playerKickMode == BallKickMode.animateFast || playerKickMode == BallKickMode.animateWithRun) {
+            float hitAgentToBallDistance = Vector3.Distance(ballHitAgent.transform.position, soccerWorld.soccerBall.transform.position);
+            if (hitAgentToBallDistance < ballHitAgentInteractDistance) ApplyGoalKickForce();
+        }
 
         if (ballKickPointPositionedRig)
         {
@@ -147,6 +157,11 @@ public class SoccerPlayer : MonoBehaviour {
     void OnBallHit(IMessage rMessage)
     {
         Debug.Log((string)rMessage.Data + " hits the ball");
+        if(goalKickForceTimeout > 0)
+        {
+            Debug.Log("Force timeout applied");
+            return;
+        }
 
         if (gameObject.name == (string)rMessage.Data)
         {
@@ -157,41 +172,51 @@ public class SoccerPlayer : MonoBehaviour {
                 tacticPointDirection = tacticPoint.transform.position - soccerWorld.soccerBall.transform.position;
                 goalKickDirection = Vector3.Slerp(transform.forward, tacticPointDirection, dribbleKickDirectionLerp);
                 soccerWorld.soccerBallRigidBody.AddForce(goalKickDirection.normalized / dribbleForceClamp, ForceMode.Acceleration);
-                Debug.DrawRay(transform.position, transform.forward, Color.yellow, 3F);
-                Debug.DrawRay(soccerWorld.soccerBall.transform.position, goalKickDirection.normalized, Color.red, 2F);
+                Debug.DrawRay(transform.position, transform.forward, Color.yellow, debugRayDuration);
+                Debug.DrawRay(soccerWorld.soccerBall.transform.position, goalKickDirection.normalized, Color.red, debugRayDuration);
                 Debug.Log("Applied force for dribble kick");
 
             } else {
-                float goalKickPower = 0;
-                //Setup ball physics
-                if (playerKickMode == BallKickMode.animateWithRun)
-                {
-                    soccerWorld.soccerBallLogic.maxSpeed = goalKickWithRunMaxSpeed;
-                    soccerWorld.soccerBallLogic.forceClamp = goalKickWithRunForceClamp;
-                    goalKickPower = goalKickWithRunPower;
-                    Debug.Log("Preparing force for goal kick with run");
-
-                } else if (playerKickMode == BallKickMode.animateFast) {
-                    soccerWorld.soccerBallLogic.maxSpeed = goalKickFastMaxSpeed;
-                    soccerWorld.soccerBallLogic.forceClamp = goalKickFastForceClamp;
-                    goalKickPower = goalKickFastPower;
-                    Debug.Log("Preparing force for fast goal kick");
-                }
-                goalKickDirection = kickDirectionWithRun.transform.position - soccerWorld.soccerBall.transform.position;
-                //Stop correction
-                playerKickMode = BallKickMode.dribble;
-                //Kick the ball
-                soccerWorld.soccerBallRigidBody.AddForce(goalKickDirection.normalized * goalKickPower, ForceMode.Impulse);
-                //Dissasemble corrective rig
-                GameObject soccerKickPointTmp = transform.parent.gameObject;
-                transform.parent = null;
-                Destroy(soccerKickPointTmp);
-
-                Debug.Log("Applied force for goal kick");
+                ApplyGoalKickForce();
             }
 
-            Debug.DrawRay(soccerWorld.soccerBall.transform.position, goalKickDirection.normalized, Color.red, 2F);
+            Debug.DrawRay(soccerWorld.soccerBall.transform.position, goalKickDirection.normalized, Color.cyan, debugRayDuration);
         }
+    }
+
+    void ApplyGoalKickForce() {
+        float goalKickPower = 0;
+        Vector3 goalKickDirection = new Vector3();
+        Vector3 tacticPointDirection = new Vector3();
+        //Setup ball physics
+        if (playerKickMode == BallKickMode.animateWithRun)
+        {
+            soccerWorld.soccerBallLogic.maxSpeed = goalKickWithRunMaxSpeed;
+            soccerWorld.soccerBallLogic.forceClamp = goalKickWithRunForceClamp;
+            goalKickPower = goalKickWithRunPower;
+            Debug.Log("Preparing force for goal kick with run");
+
+        }
+        else if (playerKickMode == BallKickMode.animateFast)
+        {
+            soccerWorld.soccerBallLogic.maxSpeed = goalKickFastMaxSpeed;
+            soccerWorld.soccerBallLogic.forceClamp = goalKickFastForceClamp;
+            goalKickPower = goalKickFastPower;
+            Debug.Log("Preparing force for fast goal kick");
+        }
+        goalKickDirection = kickDirectionWithRun.transform.position - soccerWorld.soccerBall.transform.position;
+        //Stop correction
+        playerKickMode = BallKickMode.dribble;
+        //Kick the ball
+        soccerWorld.soccerBallRigidBody.AddForce(goalKickDirection.normalized * goalKickPower, ForceMode.Impulse);
+        goalKickForceTimeout = goalKickForceTimeoutLength;
+        //Dissasemble corrective rig
+        GameObject soccerKickPointTmp = transform.parent.gameObject;
+        transform.parent = null;
+        Destroy(soccerKickPointTmp);
+
+        Debug.DrawRay(soccerWorld.soccerBall.transform.position, goalKickDirection.normalized, Color.cyan, debugRayDuration);
+        Debug.Log("Applied force for goal kick");
     }
 
     void SetMoveTarget() {
@@ -204,7 +229,7 @@ public class SoccerPlayer : MonoBehaviour {
 
             moveTarget.transform.position = ProjectPointOntoFloor(ballTouchPoint, 0.01F);
 
-            Debug.DrawRay(ProjectPointOntoFloor(soccerWorld.soccerBall.transform.position, 0), ballHitVector, Color.yellow);
+            Debug.DrawRay(ProjectPointOntoFloor(soccerWorld.soccerBall.transform.position, 0), ballHitVector, Color.grey);
         }
     }
 
@@ -222,7 +247,7 @@ public class SoccerPlayer : MonoBehaviour {
             Vector3.up
             );
             kickPointToBallDistance = Vector3.Distance(ballKickPointWithRunRelative.transform.position, soccerWorld.soccerBall.transform.position);
-            Debug.Log(gameObject.name + " setting up move target approaching with run");
+            if (debugUpdate)Debug.Log(gameObject.name + " setting up move target approaching with run");
 
         } else if (playerKickMode == BallKickMode.approachFast) {
             goalKickPointToBall = soccerWorld.soccerBall.transform.position - ballKickPointFastRelative.transform.position;
@@ -231,14 +256,14 @@ public class SoccerPlayer : MonoBehaviour {
             soccerWorld.soccerBall.transform.position - transform.position,
             Vector3.up
             );
-            Debug.Log(gameObject.name + " setting up move target approaching fast");
+            if (debugUpdate) Debug.Log(gameObject.name + " setting up move target approaching fast");
             kickPointToBallDistance = Vector3.Distance(ballKickPointFastRelative.transform.position, soccerWorld.soccerBall.transform.position);
         }
 
         moveTarget.transform.position = transform.position + goalKickPointToBall;
         if (Mathf.Abs(kickPointToBallAngle) < 5 && kickPointToBallDistance < 0.2) goalKickTargetLocked = true;
 
-        Debug.Log("Goal Kick Point to ball angle, distance " + kickPointToBallAngle + ", " + kickPointToBallDistance);
+        if (debugUpdate) Debug.Log("Goal Kick Point to ball angle, distance " + kickPointToBallAngle + ", " + kickPointToBallDistance);
     }
 
     void OnGoalKickCLick(IMessage rMessage) {
