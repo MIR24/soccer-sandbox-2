@@ -154,10 +154,10 @@ public class SoccerPlayer : MonoBehaviour {
             Vector3 tacticPointDirection = new Vector3();
             //Perform ball hit
             if(playerKickMode == BallKickMode.dribble) {
-                Debug.DrawRay(transform.position, transform.forward, Color.yellow, 3F);
                 tacticPointDirection = tacticPoint.transform.position - soccerWorld.soccerBall.transform.position;
                 goalKickDirection = Vector3.Slerp(transform.forward, tacticPointDirection, dribbleKickDirectionLerp);
                 soccerWorld.soccerBallRigidBody.AddForce(goalKickDirection.normalized / dribbleForceClamp, ForceMode.Acceleration);
+                Debug.DrawRay(transform.position, transform.forward, Color.yellow, 3F);
                 Debug.DrawRay(soccerWorld.soccerBall.transform.position, goalKickDirection.normalized, Color.red, 2F);
                 Debug.Log("Applied force for dribble kick");
 
