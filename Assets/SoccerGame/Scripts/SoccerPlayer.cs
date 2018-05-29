@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using com.ootii.Messages;
+using RootMotion.FinalIK;
 
 public class SoccerPlayer : MonoBehaviour {
 
@@ -48,10 +49,13 @@ public class SoccerPlayer : MonoBehaviour {
     public float ballHitAgentInteractDistance = 0.1F;
 
     private NavMeshAgent soccerPlayerNavigator;
+    private FullBodyBipedIK IKSoccerPlayerController;
+
 
 
     // Use this for initialization
     void Start () {
+        IKSoccerPlayerController = GetComponent<FullBodyBipedIK>();
         route = GameObject.FindGameObjectWithTag("Route");
         ballProjection = GameObject.FindGameObjectWithTag("BallProjection");
         tacticPoint = GameObject.FindGameObjectWithTag("TacticPoint");
@@ -120,6 +124,15 @@ public class SoccerPlayer : MonoBehaviour {
         }
     }
 
+    private void LateUpdate()
+    {
+        float hitAgentToBallDistance = Vector3.Distance(ballHitAgent.transform.position, soccerWorld.soccerBall.transform.position);
+        if(hitAgentToBallDistance < 1)
+        {
+            IKSoccerPlayerController.solver.IKPositionWeight = 1 - hitAgentToBallDistance;
+            Debug.Log(hitAgentToBallDistance);
+        }
+    }
     void OnDrawGizmos()
     {
         Gizmos.DrawIcon(ballTouchPoint, "Light Gizmo.tiff", true);
