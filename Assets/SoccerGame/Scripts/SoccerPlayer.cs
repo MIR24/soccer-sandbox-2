@@ -187,7 +187,6 @@ public class SoccerPlayer : MonoBehaviour {
     void ApplyGoalKickForce() {
         float goalKickPower = 0;
         Vector3 goalKickDirection = new Vector3();
-        Vector3 tacticPointDirection = new Vector3();
         //Setup ball physics
         if (playerKickMode == BallKickMode.animateWithRun)
         {
